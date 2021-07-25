@@ -1,4 +1,5 @@
 const Discord = require('discord.js');
+const fetch = require("node-fetch");
 const {
 	prefix,
 	token,
@@ -11,7 +12,7 @@ const client = new Discord.Client();
 client.login(token);
 
 
-// Listeners 
+// Listeners
 client.once('ready', () => {
     console.log('Bot is ready!');
    });
@@ -28,4 +29,28 @@ client.once('ready', () => {
 client.on("message", function (message) {
     if (message.author.equals(client.user)) return; // Ignores itself
     if (message.channel.type === 'dm') return message.reply("https://media.giphy.com/media/l0K4mbH4lKBhAPFU4/giphy.gif"); // Placeholder response
+
+ 
   });
+
+// Handle channel messages
+
+client.on("message", async message => {
+    //if messages are in channel 'bill-gates'
+    if (message.channel.name == "bill-gates") {
+    if (message.author.bot) return;
+    message.content = message.content.replace(/@(everyone)/gi, "everyone").replace(/@(here)/gi, "here");
+    if (message.content.includes(`@`)) {
+    return message.channel.send(`**:x: Please dont mention anyone**`);
+     }
+     
+    if  (message.content.includes(`!test`)) 
+    message.channel.send(`Hello <@${message.author.id}> https://media.giphy.com/media/l0K4mbH4lKBhAPFU4/giphy.gif `); 
+    }
+
+    if (message.content.includes(`!help`)) {
+        return message.channel.send(`List of commands here....`);
+         }
+
+         
+    });
